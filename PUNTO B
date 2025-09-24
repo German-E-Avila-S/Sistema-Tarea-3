@@ -1,0 +1,40 @@
+% ------------------------------------------------------------------------
+% Ejemplo: Suma de señal EMG + Ruido Gaussiano (tipo figura 1.4)
+% ------------------------------------------------------------------------
+
+clear; close all; clc;
+
+% Cargar señal EMG desde archivo (ajusta el nombre si es diferente)
+filename = 'Senal_EMG.txt';     
+Senal_EMG = load(filename);     
+
+% Si el archivo tiene varias columnas, usar la primera
+if size(Senal_EMG,2) > 1
+    Senal_EMG = Senal_EMG(:,1);
+end
+Senal_EMG = Senal_EMG(:);   % forzar vector columna
+
+% Parámetros
+Fs = 1000;                  % Frecuencia de muestreo en Hz (ajústalo según tus datos)
+N = length(Senal_EMG);      % Número de muestras
+t = (0:N-1)/Fs;             % Vector de tiempo en segundos
+
+% Generar ruido gaussiano
+Amp_ruido = 0.1;            % Amplitud del ruido
+ruido = Amp_ruido * randn(N,1);
+
+% Suma EMG + ruido
+Suma_EMG = Senal_EMG + ruido;
+
+% Graficar
+figure('Color','w');
+plot(t, Suma_EMG, 'k');     % 'k' = negro
+title('Señal EMG y Ruido');
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+grid on;
+
+xlim([0 5]);   % muestra solo de 0 a 0.6 segundos
+
+
+
