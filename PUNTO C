@@ -1,0 +1,51 @@
+% Parámetros de simulación
+tiempo = 0:0.0001:0.10;  % tiempo de 0 a 0.05s con paso de 0.1 ms
+
+% Señal 1: Coseno 1.2 Vpp, 15 Hz
+amp_cos = 1.2/2; % amplitud pico
+frec_cos = 15;
+senal_cos = amp_cos * cos(2*pi*frec_cos*tiempo);
+
+% Señal 2: Triangular 0.3 V amplitud, 80 Hz
+amp_tri = 0.3; % amplitud pico
+frec_tri = 80;
+senal_tri = amp_tri * sawtooth(2*pi*frec_tri*tiempo, 0.5); % triangular
+
+% Señal 3: Cuadrada 0.3 V amplitud, 150 Hz
+amp_cuad = 0.3;
+frec_cuad = 150;
+senal_cuad = amp_cuad * square(2*pi*frec_cuad*tiempo);
+
+% Señal suma
+senal_suma = senal_cos + senal_tri + senal_cuad;
+
+% Graficar
+figure;
+
+subplot(4,1,1);
+plot(tiempo, senal_cos, 'r');
+title('Señal Coseno 15 Hz, 1.2 Vpp');
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+grid on;
+
+subplot(4,1,2);
+plot(tiempo, senal_tri, 'b');
+title('Señal Triangular 80 Hz, 0.3 V');
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+grid on;
+
+subplot(4,1,3);
+plot(tiempo, senal_cuad, 'm');
+title('Señal Cuadrada 150 Hz, 0.3 V');
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+grid on;
+
+subplot(4,1,4);
+plot(tiempo, senal_suma, 'g');
+title('Suma de Señales');
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+grid on;
