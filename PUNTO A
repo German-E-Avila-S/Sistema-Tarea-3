@@ -1,0 +1,33 @@
+% Inciso (a) - Suma de señal ECG con una senoidal y una cuadrada
+% Definir parámetros de muestreo
+Fs = 512;        % Frecuencia de muestreo en Hz (512 muestras por segundo)
+N = Fs * 3;      % Número de muestras para 3 segundos (3 * 512 = 1536)
+Senal_ECG = Senal_ECG(1:N);   % Se recortan los primeros 3 segundos de ECG
+t = (0:N-1)/Fs;  % Vector de tiempo para graficar (en segundos)
+
+% Generar señal senoidal
+Frec_seno = 60;      % Frecuencia de la senoidal en Hz
+Amp_seno = 0.1;      % Amplitud de la senoidal en Volt
+Senal_Seno = Amp_seno * sin(2*pi*Frec_seno*t);
+
+% Generar señal cuadrada
+amplitud_cuadrada = 0.2;    % Amplitud de la señal cuadrada en Volt
+frecuencia_cuadrada = 200;  % Frecuencia de la cuadrada en Hz
+senal_cuadrada = amplitud_cuadrada * square(2*pi*frecuencia_cuadrada*t);
+
+% Suma de señales
+Suma_ECG = Senal_ECG' + Senal_Seno + senal_cuadrada; 
+
+% Graficar las señales
+figure;                         % Crear nueva figura
+plot(t, Senal_ECG, 'b', 'LineWidth', 0.8); hold on; % Graficar ECG en azul
+plot(t, Suma_ECG, 'r', 'LineWidth', 0.8);           % Graficar suma en rojo
+
+% Personalización de la gráfica
+title('Señal ECG + Senoidal + Cuadrada');   % Título de la gráfica
+xlabel('Tiempo (s)');                       % Etiqueta eje X
+ylabel('Amplitud (V)');                     % Etiqueta eje Y
+legend('ECG Original', 'ECG + Seno + Cuadrada'); % Leyenda
+grid on;                                    % Activar rejilla
+
+xlim([0 0.7]);
